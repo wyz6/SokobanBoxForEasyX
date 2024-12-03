@@ -23,7 +23,6 @@
 #include "../include/input.h"       // 用户输入处理模块
 #include "../include/game_logic.h"  // 游戏逻辑模块
 #include "../include/level.h"       // 关卡模块
-#include "../include/level_generator.h"  // 新增的关卡生成器模块
 
 // 宏定义
 #define GAME_TITLE "打砖块游戏"

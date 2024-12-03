@@ -1,17 +1,16 @@
+// Sokobanbox/src/game_logic.cpp
 #include "../include/utils.h"
 
-// 全局变量定义
 Game::Ball ball;
 Game::Bar barect;
 std::vector<Game::Brick> bricks;
 
-// 数据初始化
 void GameLogic::initBall() {
 	ball.x = Game::Width / 2;
 	ball.y = Game::High / 2;
-	ball.vx = 5;  // 调整初始水平速度
-	ball.vy = -5; // 调整初始垂直速度
-	ball.radius = 10; // 小球半径
+	ball.vx = 5;
+	ball.vy = -5;
+	ball.radius = 10;
 }
 
 void GameLogic::updateBarBounds() {
@@ -23,7 +22,7 @@ void GameLogic::updateBarBounds() {
 
 void GameLogic::initBar() {
 	barect.h = Game::High / 20;
-	barect.w = Game::Width / 4; // 挡板宽度
+	barect.w = Game::Width / 4;
 	barect.x = Game::Width / 2;
 	barect.y = Game::High - barect.h / 2;
 
@@ -44,10 +43,10 @@ void GameLogic::gameover() {
 }
 
 void GameLogic::updateWithoutInput() {
-	Collision::checkBallBarCollision();          // 检查小球与挡板的碰撞
-	Collision::checkBallBrickCollision();        // 检查小球与砖块的碰撞
-	Collision::checkBallBoundaryCollision();     // 检查小球与屏幕边界的碰撞
-	Graphics::updateBallPosition();              // 更新小球的位置
+	Collision::checkBallBarCollision();
+	Collision::checkBallBrickCollision();
+	Collision::checkBallBoundaryCollision();
+	Graphics::updateBallPosition();
 }
 
 bool GameLogic::allBricksDestroyed() {
