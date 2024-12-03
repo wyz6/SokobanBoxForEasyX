@@ -4,6 +4,7 @@
 #include <vector>
 #include <fstream>
 #include <string>
+#include <ctime>
 
 namespace LevelGenerator {
 
@@ -28,7 +29,7 @@ namespace LevelGenerator {
 				bricks.push_back(brick);
 			}
 
-			std::string filename = "level_" + std::to_string(i) + ".txt";
+			std::string filename = "../level_info/level_" + std::to_string(i) + ".txt";
 			Level::saveLevel(filename);
 		}
 	}

@@ -1,4 +1,7 @@
-#include "utils.h"
+#include "level.h"
+#include "game.h"
+#include <fstream>
+#include <string>
 
 void Level::loadLevel(const std::string &filename) {
 	std::ifstream file(filename);

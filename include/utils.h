@@ -16,13 +16,13 @@
 #include <easyxgraphics.h>  // EasyX 图形库
 
 // 自定义头文件
-#include "game.h"        // 游戏相关的全局变量和常量
-#include "collision.h"   // 碰撞检测模块
-#include "graphics.h"    // 图形绘制模块
-#include "input.h"       // 用户输入处理模块
-#include "game_logic.h"  // 游戏逻辑模块
-#include "level.h"       // 关卡模块
-#include "level_generator.h"  // 新增的关卡生成器模块
+#include "include/game.h"        // 游戏相关的全局变量和常量
+#include "include/collision.h"   // 碰撞检测模块
+#include "include/graphics.h"    // 图形绘制模块
+#include "include/input.h"       // 用户输入处理模块
+#include "include/game_logic.h"  // 游戏逻辑模块
+#include "include/level.h"       // 关卡模块
+#include "include/level_generator.h"  // 新增的关卡生成器模块
 
 // 宏定义
 #define GAME_TITLE "打砖块游戏"

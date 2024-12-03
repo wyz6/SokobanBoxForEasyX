@@ -1,4 +1,10 @@
-#include "utils.h"
+#include "game_logic.h"
+#include "game.h"
+#include "collision.h"
+#include "graphics.h"
+#include "input.h"
+#include <easyxgraphics.h>
+#include <windows.h>
 
 // 全局变量定义
 Game::Ball ball;

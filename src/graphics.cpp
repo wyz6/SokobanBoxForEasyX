@@ -1,4 +1,6 @@
-#include "utils.h"
+#include "graphics.h"
+#include "game.h"
+#include <easyxgraphics.h>
 
 void Graphics::clean() {
 	setcolor(BLACK);
