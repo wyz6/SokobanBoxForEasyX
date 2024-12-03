@@ -1,7 +1,5 @@
 #include "../include/utils.h"
 #include <windows.h>
-#include <filesystem>
-#include <cstdlib>
 
 int currentLevel = 1;
 
@@ -18,24 +16,7 @@ void loadNextLevel() {
 	currentLevel++;
 }
 
-int main() {
-	srand(static_cast<unsigned>(time(nullptr))); // 初始化随机数种子
-
-	std::filesystem::path levelInfoPath = "./level_info";
-
-	std::string command = "python generate_levels.py 10 \"" + levelInfoPath.string() + "\"";
-	int result = system(command.c_str());
-	if (result != 0) {
-		std::cerr << "Failed to run Python script to generate levels." << std::endl; // 运行Python脚本失败提示
-		return 1;
-	}
-
-	startup(); // 启动游戏
-	HWND hwnd = GetHWnd();
-	SetWindowText(hwnd, TEXT(GAME_TITLE)); // 设置窗口标题
-
-	loadNextLevel(); // 加载第一关
-
+void runGameLoop() {
 	DWORD lastTime = GetTickCount();
 	const int frameRate = 60;
 	const DWORD frameDelay = 1000 / frameRate;
@@ -65,8 +46,23 @@ int main() {
 			Sleep(frameDelay - elapsedTime); // 控制帧率
 		}
 	}
+}
 
+int main() {
+	srand(static_cast<unsigned>(time(nullptr))); // 初始化随机数种子
+
+	std::filesystem::path levelInfoPath = "./level_info";
+
+	std::string command = "python generate_levels.py 10 \"" + levelInfoPath.string() + "\"";
+	int result = system(command.c_str());
+	if (result != 0) {
+		std::cerr << "Failed to run Python script to generate levels." << std::endl; // 运行Python脚本失败提示
+		return 1;
+	}
+
+	startup(); // 启动游戏
+	loadNextLevel(); // 加载第一关
+	runGameLoop(); // 运行游戏主循环
 	gameover(); // 结束游戏
-	closegraph(); // 关闭图形窗口
 	return 0;
 }

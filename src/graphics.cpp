@@ -14,6 +14,7 @@ void show() {
 	setcolor(YELLOW);
 	setfillcolor(GREEN);
 	fillcircle(ball.x, ball.y, ball.radius); // 绘制绿色的小球
+	setfillcolor(YELLOW);
 	bar(barect.left, barect.top, barect.right, barect.bottom); // 绘制黄色的挡板
 	for (const auto &brick : bricks)
 		if (brick.exists) {
