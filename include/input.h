@@ -1,10 +1,3 @@
-#ifndef INPUT_H
-#define INPUT_H
+#pragma once
 
-namespace Input {
-
-	void updateWithInput();
-
-} // namespace Input
-
-#endif // INPUT_H
+void updateWithInput(); // 处理用户输入

@@ -1,17 +1,23 @@
 #include "../include/utils.h"
 #include <conio.h>
 
-void Input::updateWithInput() {
+void updateWithInput() {
 	char input;
-	if (kbhit()) { // 判断是否有输入
-		input = getch();  // 根据用户的不同输入来移动，不必输入回车
-		if (input == 'a' && barect.left > 0) {
-			barect.x -= 15; // 位置左移
-			GameLogic::updateBarBounds(); // 更新挡板边界
-		}
-		if (input == 'd' && barect.right < Game::Width) {
-			barect.x += 15; // 位置右移
-			GameLogic::updateBarBounds(); // 更新挡板边界
+	if (kbhit()) {
+		input = getch();
+		switch (input) {
+			case 'a': // 左箭头键
+				if (barect.left > 0) {
+					barect.x -= 15; // 移动挡板向左
+					updateBarBounds(); // 更新挡板边界
+				}
+				break;
+			case 'd': // 右箭头键
+				if (barect.right < Width) {
+					barect.x += 15; // 移动挡板向右
+					updateBarBounds(); // 更新挡板边界
+				}
+				break;
 		}
 	}
 }

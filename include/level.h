@@ -1,13 +1,6 @@
-#ifndef LEVEL_H
-#define LEVEL_H
+#pragma once
 
 #include "game.h"
 
-namespace Level {
-
-	void loadLevel(const std::string &filename);
-	void saveLevel(const std::string &filename);
-
-} // namespace Level
-
-#endif // LEVEL_H
+void loadLevel(const std::string &filename); // 加载关卡文件
+void saveLevel(const std::string &filename); // 保存关卡文件

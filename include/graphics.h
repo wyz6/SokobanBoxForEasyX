@@ -1,12 +1,5 @@
-#ifndef GRAPHICS_H
-#define GRAPHICS_H
+#pragma once
 
-namespace Graphics {
-
-	void clean();
-	void show();
-	void updateBallPosition();
-
-} // namespace Graphics
-
-#endif // GRAPHICS_H
+void clean(); // 清除屏幕上的对象
+void show(); // 显示游戏对象
+void updateBallPosition(); // 更新小球位置
