@@ -1,0 +1,266 @@
+#include <easyxgraphics.h>  // <graphics.h>
+#include <conio.h>
+#include <vector>
+
+const int High  {480};       // 游戏画面尺寸
+const int Width {640};
+const int Brick_num  {10};   // 砖块个数
+
+// 结构体定义
+struct Ball {
+	int x, y;      // 小球的坐标
+	int vx, vy;    // 小球的速度
+	int radius;    // 小球的半径
+} ball;
+
+struct Bar {
+	int x, y;      // 挡板中心坐标
+	int h, w;      // 挡板的高度和宽度
+	int left, right, top, bottom; // 挡板的边界坐标
+} barect;
+
+// 每个砖块是否存在，1为存在，0为没有了
+std::vector<bool> isBrickExisted(Brick_num, true);
+// 每个砖块的高度和宽度
+int brick_high, brick_width;
+
+// 数据初始化
+void initBall() {
+	ball.x = Width / 2;
+	ball.y = High / 2;
+	ball.vx = 2;  // 增加初始速度以提高游戏性
+	ball.vy = -2; // 初始方向向上
+	ball.radius = 10; // 减小半径以增加挑战性
+}
+
+void updateBarBounds() {
+	barect.left = barect.x - barect.w / 2;
+	barect.right = barect.x + barect.w / 2;
+	barect.top = barect.y - barect.h / 2;
+	barect.bottom = barect.y + barect.h / 2;
+}
+
+void initBar() {
+	barect.h = High / 20;
+	barect.w = Width / 4; // 缩小挡板宽度以增加挑战性
+	barect.x = Width / 2;
+	barect.y = High - barect.h / 2;
+
+	updateBarBounds();
+}
+
+void initBricks() {
+	brick_width = Width / Brick_num;
+	brick_high = High / 15; // 调整砖块高度以适应更多砖块
+}
+
+void startup() {
+	initBall();
+	initBar();
+	initBricks();
+
+	initgraph(Width, High);
+	BeginBatchDraw();
+}
+
+void gameover() {
+	EndBatchDraw();
+	closegraph();
+}
+
+// 消除画面
+void clean() {
+	setcolor(BLACK);
+	setfillcolor(BLACK);
+	fillcircle(ball.x, ball.y, ball.radius);  // 绘制黑线、黑色填充的圆
+	bar(barect.left, barect.top, barect.right, barect.bottom); // 绘制黑线、黑色填充的挡板
+
+	for (int i = 0; i < Brick_num; ++i) {
+		if (!isBrickExisted[i]) { // 砖块没有了，绘制黑色
+			int brick_left = i * brick_width;
+			int brick_right = brick_left + brick_width;
+			int brick_top = 0;
+			int brick_bottom = brick_high;
+			fillrectangle(brick_left, brick_top, brick_right, brick_bottom);
+		}
+	}
+}
+
+// 显示画面
+void show() {
+	setcolor(YELLOW);
+	setfillcolor(GREEN);
+	fillcircle(ball.x, ball.y, ball.radius); // 绘制黄线、绿色填充的圆
+	bar(barect.left, barect.top, barect.right, barect.bottom); // 绘制黄线、绿色填充的挡板
+
+	for (int i = 0; i < Brick_num; ++i) {
+		if (isBrickExisted[i]) { // 砖块存在，绘制砖块
+			int brick_left = i * brick_width;
+			int brick_right = brick_left + brick_width;
+			int brick_top = 0;
+			int brick_bottom = brick_high;
+
+			setcolor(WHITE);
+			setfillcolor(RED);
+			fillrectangle(brick_left, brick_top, brick_right, brick_bottom); // 绘制砖块
+		}
+	}
+
+	FlushBatchDraw();
+	Sleep(3); // 延时
+}
+// 检查小球是否与挡板发生碰撞并更新状态
+bool checkBallBarCollision() {
+	// 检查小球是否在挡板的垂直范围内
+	if (ball.y + ball.radius < barect.top || ball.y - ball.radius > barect.bottom) {
+		return false;
+	}
+
+	// 计算小球中心到挡板最近点的距离
+	int closest_x = std::clamp(ball.x, barect.left, barect.right);
+	int closest_y = barect.top;  // 挡板顶部是唯一可能的垂直碰撞点
+
+	// 计算小球中心到最近点的向量
+	int dx = ball.x - closest_x;
+	int dy = ball.y - closest_y;
+
+	// 如果距离小于等于小球的半径，则发生碰撞
+	if (dx * dx + dy * dy <= ball.radius * ball.radius) {
+		// 主要碰撞发生在垂直方向（小球从上往下撞击挡板顶部）
+		if (ball.vy > 0 && ball.y + ball.radius >= barect.top) {
+			ball.vy = -ball.vy;
+			return true;
+		}
+
+		// 检查水平方向的碰撞（小球从侧面撞击挡板）
+		if (ball.vx > 0 && ball.x + ball.radius >= barect.left && ball.x + ball.radius <= barect.right &&
+		        ball.y >= barect.top && ball.y <= barect.bottom) {
+			ball.vx = -ball.vx;
+			return true;
+		}
+		if (ball.vx < 0 && ball.x - ball.radius <= barect.right && ball.x - ball.radius >= barect.left &&
+		        ball.y >= barect.top && ball.y <= barect.bottom) {
+			ball.vx = -ball.vx;
+			return true;
+		}
+	}
+	return false;
+}
+
+// 检查小球是否与砖块发生碰撞并更新状态
+bool checkBallBrickCollision() {
+	for (int i = 0; i < Brick_num; ++i) {
+		if (!isBrickExisted[i])
+			continue; // 砖块不存在，跳过
+
+		int brick_left = i * brick_width;
+		int brick_right = brick_left + brick_width;
+		int brick_top = 0;
+		int brick_bottom = brick_high;
+
+		// 计算小球的四个角点
+		int ball_left = ball.x - ball.radius;
+		int ball_right = ball.x + ball.radius;
+		int ball_top = ball.y - ball.radius;
+		int ball_bottom = ball.y + ball.radius;
+
+		// 检查小球是否与砖块的任何部分发生碰撞
+		if (ball_bottom >= brick_top && ball_top <= brick_bottom &&
+		        ball_right >= brick_left && ball_left <= brick_right) {
+			// 计算最近的碰撞点
+			int closest_x = std::clamp(ball.x, brick_left, brick_right);
+			int closest_y = std::clamp(ball.y, brick_top, brick_bottom);
+
+			// 计算小球到最近碰撞点的距离
+			int dx = ball.x - closest_x;
+			int dy = ball.y - closest_y;
+
+			// 如果距离小于等于小球的半径，则发生碰撞
+			if (dx * dx + dy * dy <= ball.radius * ball.radius) {
+				isBrickExisted[i] = false;
+				if (dy > dx) {
+					ball.vy = -ball.vy;
+				} else {
+					ball.vx = -ball.vx;
+				}
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+// 更新小球位置
+void updateBallPosition() {
+	ball.x += ball.vx;
+	ball.y += ball.vy;
+}
+
+// 检查小球是否碰到屏幕边界
+void checkBallBoundaryCollision() {
+	// 左右边界碰撞
+	if (ball.x - ball.radius <= 0 || ball.x + ball.radius >= Width) {
+		ball.vx = -ball.vx;
+	}
+
+	// 上下边界碰撞
+	if (ball.y - ball.radius <= 0) {
+		ball.vy = -ball.vy;
+	} else if (ball.y + ball.radius >= High) {
+		// 游戏结束条件：小球掉出屏幕下方
+		gameover();
+		exit(0); // 退出程序
+	}
+}
+
+// 优化后的更新函数
+void updateWithoutInput() {
+	checkBallBarCollision();          // 检查小球与挡板的碰撞
+	checkBallBrickCollision();        // 检查小球与砖块的碰撞
+	checkBallBoundaryCollision();     // 检查小球与屏幕边界的碰撞
+	updateBallPosition();             // 更新小球的位置
+}
+
+void updateWithInput() { // 与用户输入有关的更新
+	char input;
+	if (kbhit()) { // 判断是否有输入
+		input = getch();  // 根据用户的不同输入来移动，不必输入回车
+		if (input == 'a' && barect.left > 0) {
+			barect.x -= 15; // 位置左移
+			updateBarBounds(); // 更新挡板边界
+		}
+		if (input == 'd' && barect.right < Width) {
+			barect.x += 15; // 位置右移
+			updateBarBounds(); // 更新挡板边界
+		}
+	}
+}
+
+int main() {
+	startup();
+	while (true) {
+		clean();
+		updateWithoutInput();
+		updateWithInput();
+		show();
+
+		// 检查是否所有砖块都被消除
+		bool all_bricks_destroyed = true;
+		for (bool exists : isBrickExisted) {
+			if (exists) {
+				all_bricks_destroyed = false;
+				break;
+			}
+		}
+
+		if (all_bricks_destroyed) {
+			// 所有砖块都被消除，游戏胜利
+			outtextxy(Width / 2 - 50, High / 2, "You Win!");
+			FlushBatchDraw();
+			Sleep(2000); // 暂停2秒
+			break;
+		}
+	}
+	gameover();
+	return 0;
+}

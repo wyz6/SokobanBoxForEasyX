@@ -1,0 +1,48 @@
+# Project: ´ò×©¿é
+# Makefile created by Dev-C++ 6.0
+
+CPP      = g++.exe -D__DEBUG__
+CC       = gcc.exe -D__DEBUG__
+WINDRES  = windres.exe
+RES      = ´ò×©¿é_private.res
+OBJ      = main.o game_logic.o graphics.o input.o collision.o level.o level_1.o $(RES)
+LINKOBJ  = main.o game_logic.o graphics.o input.o collision.o level.o level_1.o $(RES)
+LIBS     = -L"D:/Software/Dev-Cpp/MinGW64/lib" -L"D:/Software/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -lEasyX -lgdi32 -lole32 -g3
+INCS     = -I"D:/Software/Dev-Cpp/MinGW64/include" -I"D:/Software/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Software/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/11.4.0/include"
+CXXINCS  = -I"D:/Software/Dev-Cpp/MinGW64/include" -I"D:/Software/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Software/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/11.4.0/include" -I"D:/Software/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/11.4.0/include/c++"
+BIN      = ´ò×©¿é.exe
+CXXFLAGS = $(CXXINCS) -Wall -Wextra -Wshadow -Wfloat-equal -g3 -pipe -std=c++20
+CFLAGS   = $(INCS) -Wall -Wextra -Wshadow -Wfloat-equal -g3 -pipe -std=c++20
+RM       = del /q
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+main.o: main.cpp
+	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
+
+game_logic.o: game_logic.cpp
+	$(CPP) -c game_logic.cpp -o game_logic.o $(CXXFLAGS)
+
+graphics.o: graphics.cpp
+	$(CPP) -c graphics.cpp -o graphics.o $(CXXFLAGS)
+
+input.o: input.cpp
+	$(CPP) -c input.cpp -o input.o $(CXXFLAGS)
+
+collision.o: collision.cpp
+	$(CPP) -c collision.cpp -o collision.o $(CXXFLAGS)
+
+level.o: level.cpp
+	$(CPP) -c level.cpp -o level.o $(CXXFLAGS)
+
+´ò×©¿é_private.res: ´ò×©¿é_private.rc 
+	$(WINDRES) -i ´ò×©¿é_private.rc --input-format=rc -o ´ò×©¿é_private.res -O coff 
+
