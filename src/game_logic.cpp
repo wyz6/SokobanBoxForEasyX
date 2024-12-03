@@ -1,4 +1,3 @@
-// Sokobanbox/src/game_logic.cpp
 #include "../include/utils.h"
 
 Game::Ball ball;
@@ -25,14 +24,12 @@ void GameLogic::initBar() {
 	barect.w = Game::Width / 4;
 	barect.x = Game::Width / 2;
 	barect.y = Game::High - barect.h / 2;
-
 	updateBarBounds();
 }
 
 void GameLogic::startup() {
 	initBall();
 	initBar();
-
 	initgraph(Game::Width, Game::High);
 	BeginBatchDraw();
 }
@@ -50,10 +47,8 @@ void GameLogic::updateWithoutInput() {
 }
 
 bool GameLogic::allBricksDestroyed() {
-	for (const auto &brick : bricks) {
-		if (brick.exists) {
+	for (const auto &brick : bricks)
+		if (brick.exists)
 			return false;
-		}
-	}
 	return true;
 }

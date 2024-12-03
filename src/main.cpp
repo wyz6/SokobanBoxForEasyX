@@ -1,7 +1,6 @@
 // Sokobanbox/src/main.cpp
 #include "../include/utils.h"
 #include <windows.h>
-#include <iostream>
 #include <filesystem>
 #include <cstdlib>
 
@@ -10,7 +9,6 @@ int currentLevel = 1;
 void loadNextLevel() {
 	std::string levelInfoPath = "./level_info/";
 	std::filesystem::path filename = levelInfoPath + "level_" + std::to_string(currentLevel) + ".txt";
-	std::cout << "Loading level from: " << filename << std::endl;
 
 	if (!std::filesystem::exists(filename)) {
 		std::cerr << "File does not exist: " << filename << std::endl;
@@ -23,12 +21,8 @@ void loadNextLevel() {
 
 int main() {
 	srand(static_cast<unsigned>(time(nullptr)));
-	std::cout << "Generating levels..." << std::endl;
 
 	std::filesystem::path levelInfoPath = "./level_info";
-
-	std::cout << "Current working directory: " << std::filesystem::current_path().string() << std::endl;
-	std::cout << "Level info path: " << levelInfoPath.string() << std::endl;
 
 	std::string command = "python generate_levels.py 10 \"" + levelInfoPath.string() + "\"";
 	int result = system(command.c_str());
@@ -36,8 +30,6 @@ int main() {
 		std::cerr << "Failed to run Python script to generate levels." << std::endl;
 		return 1;
 	}
-
-	std::cout << "Levels generated." << std::endl;
 
 	GameLogic::startup();
 	HWND hwnd = GetHWnd();
@@ -67,9 +59,8 @@ int main() {
 				Sleep(2000);
 
 				loadNextLevel();
-				if (bricks.empty()) {
+				if (bricks.empty())
 					break;
-				}
 			}
 		} else {
 			Sleep(frameDelay - elapsedTime);
