@@ -1,5 +1,7 @@
 #include "utils.h"
 
+using std::clamp;
+
 bool Collision::checkBallBarCollision() {
 	// 检查小球是否在挡板的垂直范围内
 	if (ball.y + ball.radius < barect.top || ball.y - ball.radius > barect.bottom) {
@@ -57,8 +59,8 @@ bool Collision::checkBallBrickCollision() {
 		if (ball_bottom >= brick_top && ball_top <= brick_bottom &&
 		        ball_right >= brick_left && ball_left <= brick_right) {
 			// 计算最近的碰撞点
-			int closest_x = std::clamp(ball.x, brick_left, brick_right);
-			int closest_y = std::clamp(ball.y, brick_top, brick_bottom);
+			int closest_x = clamp(ball.x, brick_left, brick_right);
+			int closest_y = clamp(ball.y, brick_top, brick_bottom);
 
 			// 计算小球到最近碰撞点的距离
 			int dx = ball.x - closest_x;

@@ -5,8 +5,8 @@ CPP      = g++.exe -D__DEBUG__
 CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
 RES      = ´ò×©¿é_private.res
-OBJ      = main.o game_logic.o graphics.o input.o collision.o level.o level_1.o $(RES)
-LINKOBJ  = main.o game_logic.o graphics.o input.o collision.o level.o level_1.o $(RES)
+OBJ      = main.o game_logic.o graphics.o input.o collision.o level.o level_1.o .o level_generator.o $(RES)
+LINKOBJ  = main.o game_logic.o graphics.o input.o collision.o level.o level_1.o .o level_generator.o $(RES)
 LIBS     = -L"D:/Software/Dev-Cpp/MinGW64/lib" -L"D:/Software/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -lEasyX -lgdi32 -lole32 -g3
 INCS     = -I"D:/Software/Dev-Cpp/MinGW64/include" -I"D:/Software/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Software/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/11.4.0/include"
 CXXINCS  = -I"D:/Software/Dev-Cpp/MinGW64/include" -I"D:/Software/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Software/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/11.4.0/include" -I"D:/Software/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/11.4.0/include/c++"
@@ -42,6 +42,9 @@ collision.o: collision.cpp
 
 level.o: level.cpp
 	$(CPP) -c level.cpp -o level.o $(CXXFLAGS)
+
+level_generator.o: level_generator.cpp
+	$(CPP) -c level_generator.cpp -o level_generator.o $(CXXFLAGS)
 
 ´ò×©¿é_private.res: ´ò×©¿é_private.rc 
 	$(WINDRES) -i ´ò×©¿é_private.rc --input-format=rc -o ´ò×©¿é_private.res -O coff 
