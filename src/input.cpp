@@ -1,5 +1,4 @@
-#include "input.h"
-#include "game.h"
+#include "../include/utils.h"
 #include <conio.h>
 
 void Input::updateWithInput() {

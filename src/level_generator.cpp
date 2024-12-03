@@ -1,14 +1,13 @@
-#include "level_generator.h"
-#include "level.h"
-#include <random>
-#include <vector>
-#include <fstream>
-#include <string>
-#include <ctime>
+#include "../include/utils.h"
 
 namespace LevelGenerator {
 
-	void generateLevels(int numLevels) {
+	void generateLevels(int numLevels, const std::string &levelInfoPath) {
+		// 确保目录存在
+		if (!std::filesystem::exists(levelInfoPath)) {
+			std::filesystem::create_directories(levelInfoPath);
+		}
+
 		std::mt19937 rng(static_cast<unsigned>(time(nullptr)));
 		std::uniform_int_distribution<int> xDist(0, Game::Width - 100);
 		std::uniform_int_distribution<int> yDist(0, Game::High - 50);
@@ -29,8 +28,20 @@ namespace LevelGenerator {
 				bricks.push_back(brick);
 			}
 
-			std::string filename = "../level_info/level_" + std::to_string(i) + ".txt";
-			Level::saveLevel(filename);
+			std::string filename = levelInfoPath + "level_" + std::to_string(i) + ".txt";
+			std::cout << "Saving level to: " << filename << std::endl; // 日志输出
+
+			std::ofstream file(filename);
+			if (!file.is_open()) {
+				std::cerr << "Failed to create level file: " << filename << std::endl;
+				continue;
+			}
+
+			for (const auto &brick : bricks) {
+				file << brick.x << " " << brick.y << " " << brick.width << " " << brick.height << std::endl;
+			}
+
+			file.close();
 		}
 	}
 

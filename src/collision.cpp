@@ -1,6 +1,4 @@
-#include "collision.h"
-#include "game.h"
-#include <algorithm>
+#include "../include/utils.h"
 
 bool Collision::checkBallBarCollision() {
 	// 检查小球是否在挡板的垂直范围内

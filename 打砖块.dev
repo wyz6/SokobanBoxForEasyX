@@ -10,16 +10,16 @@ PrivateResource=´ò×©¿é_private.rc
 ResourceIncludes=
 MakeIncludes=
 Compiler=
-CppCompiler=
-Linker=-lEasyX -lgdi32 -lole32
+CppCompiler=_@@_
+Linker=-lEasyX -lgdi32 -lole32_@@_
 IsCpp=1
 Icon=´ò×©¿é.ico
 ExeOutput=
-ObjectOutput=
+ObjectOutput=out
 LogOutput=
 LogOutputEnabled=0
 OverrideOutput=0
-OverrideOutputName=
+OverrideOutputName=´ò×©¿é.exe
 HostApplication=
 UseCustomMakefile=0
 CustomMakefile=
@@ -28,32 +28,13 @@ Folders=include,level_info,scr
 IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=1
-CompilerSettings=0000000000111100001000001
+CompilerSettings=00000
 UnitCount=17
 
-[VersionInfo]
-Major=1
-Minor=0
-Release=0
-Build=0
-LanguageID=1033
-CharsetID=1252
-CompanyName=
-FileVersion=1.0.0.0
-FileDescription=Developed using the Dev-C++ IDE
-InternalName=
-LegalCopyright=
-LegalTrademarks=
-OriginalFilename=
-ProductName=
-ProductVersion=1.0.0.0
-AutoIncBuildNr=0
-SyncProduct=1
-
 [Unit1]
-FileName=main.cpp
+FileName=include\collision.h
 CompileCpp=1
-Folder=scr
+Folder=include
 Compile=1
 Link=1
 Priority=1000
@@ -61,7 +42,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit2]
-FileName=game.h
+FileName=include\game.h
 CompileCpp=1
 Folder=include
 Compile=1
@@ -71,7 +52,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit3]
-FileName=game_logic.h
+FileName=include\game_logic.h
 CompileCpp=1
 Folder=include
 Compile=1
@@ -81,9 +62,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit4]
-FileName=game_logic.cpp
+FileName=include\graphics.h
 CompileCpp=1
-Folder=scr
+Folder=include
 Compile=1
 Link=1
 Priority=1000
@@ -91,7 +72,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit5]
-FileName=graphics.h
+FileName=include\input.h
 CompileCpp=1
 Folder=include
 Compile=1
@@ -101,9 +82,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit6]
-FileName=graphics.cpp
+FileName=include\level.h
 CompileCpp=1
-Folder=scr
+Folder=include
 Compile=1
 Link=1
 Priority=1000
@@ -111,7 +92,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit7]
-FileName=input.h
+FileName=include\level_generator.h
 CompileCpp=1
 Folder=include
 Compile=1
@@ -121,17 +102,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit8]
-FileName=input.cpp
-CompileCpp=1
-Folder=scr
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit9]
-FileName=collision.h
+FileName=include\utils.h
 CompileCpp=1
 Folder=include
 Compile=1
@@ -140,8 +111,18 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
+[Unit9]
+FileName=src\collision.cpp
+CompileCpp=1
+Folder=scr
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
 [Unit10]
-FileName=collision.cpp
+FileName=src\game_logic.cpp
 CompileCpp=1
 Folder=scr
 Compile=1
@@ -151,7 +132,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit11]
-FileName=utils.h
+FileName=src\graphics.cpp
 CompileCpp=1
 Folder=scr
 Compile=1
@@ -161,9 +142,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit12]
-FileName=level.h
+FileName=src\input.cpp
 CompileCpp=1
-Folder=include
+Folder=scr
 Compile=1
 Link=1
 Priority=1000
@@ -171,7 +152,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit13]
-FileName=level.cpp
+FileName=src\level.cpp
 CompileCpp=1
 Folder=scr
 Compile=1
@@ -181,8 +162,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit14]
-FileName=level_1.txt
-Folder=level_info
+FileName=src\level_generator.cpp
+CompileCpp=1
+Folder=scr
 Compile=1
 Link=1
 Priority=1000
@@ -190,8 +172,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit15]
-FileName=.gitignore
-Folder=
+FileName=src\main.cpp
+CompileCpp=1
+Folder=scr
 Compile=1
 Link=1
 Priority=1000
@@ -199,22 +182,39 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit16]
-FileName=level_generator.h
-CompileCpp=1
-Folder=scr
-Compile=1
-Link=1
+FileName=level_info\level_1.txt
+Folder=level_info
+Compile=0
+Link=0
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
 [Unit17]
-FileName=level_generator.cpp
-CompileCpp=1
-Folder=scr
-Compile=1
-Link=1
+FileName=level_info\level_2.txt
+Folder=level_info
+Compile=0
+Link=0
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
+
+[VersionInfo]
+Major=0
+Minor=1
+Release=1
+Build=1
+LanguageID=1033
+CharsetID=1252
+CompanyName=
+FileVersion=0.1
+FileDescription=Developed using the Dev-C++ IDE
+InternalName=
+LegalCopyright=
+LegalTrademarks=
+OriginalFilename=´ò×©¿é.exe
+ProductName=´ò×©¿é
+ProductVersion=0.1.1.1
+AutoIncBuildNr=0
+SyncProduct=0
 

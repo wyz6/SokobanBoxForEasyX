@@ -1,17 +1,17 @@
-# Project: ´ò×©¿é
+# Project: SokobanBox
 # Makefile created by Dev-C++ 6.0
 
 CPP      = g++.exe -D__DEBUG__
 CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
 RES      = out/´ò×©¿é_private.res
-OBJ      = out/.o out/collision.o out/game_logic.o out/graphics.o out/input.o out/level.o out/level_generator.o out/main.o $(RES)
-LINKOBJ  = out/.o out/collision.o out/game_logic.o out/graphics.o out/input.o out/level.o out/level_generator.o out/main.o $(RES)
+OBJ      = out/collision.o out/game_logic.o out/graphics.o out/input.o out/level.o out/level_generator.o out/main.o $(RES)
+LINKOBJ  = out/collision.o out/game_logic.o out/graphics.o out/input.o out/level.o out/level_generator.o out/main.o $(RES)
 LIBS     = -L"D:/Software/Dev-Cpp/MinGW64/lib" -L"D:/Software/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -lEasyX -lgdi32 -lole32 -g3
 INCS     = -I"D:/Software/Dev-Cpp/MinGW64/include" -I"D:/Software/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Software/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/11.4.0/include"
 CXXINCS  = -I"D:/Software/Dev-Cpp/MinGW64/include" -I"D:/Software/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Software/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/11.4.0/include" -I"D:/Software/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/11.4.0/include/c++"
 BIN      = ´ò×©¿é.exe
-CXXFLAGS = $(CXXINCS) -Wall -Wextra -Wshadow -Wfloat-equal -g3 -pipe -std=c++20 g++ -Iinclude src/*.cpp -o arkanoid_game -leasyx
+CXXFLAGS = $(CXXINCS) -Wall -Wextra -Wshadow -Wfloat-equal -g3 -pipe -std=c++20
 CFLAGS   = $(INCS) -Wall -Wextra -Wshadow -Wfloat-equal -g3 -pipe -std=c++20
 RM       = del /q
 

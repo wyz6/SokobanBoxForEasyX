@@ -1,18 +1,48 @@
-#include "utils.h"
-#include "level_generator.h"
+#include "../include/utils.h"
 #include <windows.h>
+#include <iostream> // 添加日志输出
+#include <filesystem> // 添加文件系统支持
+#include <cstdlib> // 添加 system 函数
 
 int currentLevel = 1;
 
 void loadNextLevel() {
-	std::string filename = "../level_info/level_" + std::to_string(currentLevel) + ".txt";
-	Level::loadLevel(filename);
+	std::string levelInfoPath = "./level_info/";
+	std::filesystem::path absoluteLevelInfoPath = std::filesystem::absolute(levelInfoPath);
+	std::filesystem::path filename = absoluteLevelInfoPath / ("level_" + std::to_string(currentLevel) + ".txt");
+	std::cout << "Loading level from: " << filename.string() << std::endl; // 日志输出
+
+	// 检查文件是否存在
+	if (!std::filesystem::exists(filename)) {
+		std::cerr << "File does not exist: " << filename.string() << std::endl;
+		return;
+	}
+
+	Level::loadLevel(filename.string());
 	currentLevel++;
 }
 
 int main() {
 	srand(static_cast<unsigned>(time(nullptr))); // 初始化随机数种子
-	LevelGenerator::generateLevels(10); // 生成10个关卡
+	std::cout << "Generating levels..." << std::endl; // 日志输出
+
+	// 获取当前工作目录
+	std::filesystem::path currentPath = std::filesystem::current_path();
+	std::filesystem::path levelInfoPath = currentPath / "level_info";
+
+	std::cout << "Current working directory: " << currentPath.string() << std::endl;
+	std::cout << "Level info path: " << levelInfoPath.string() << std::endl;
+
+	// 使用绝对路径调用 Python 脚本生成关卡信息
+	std::string absoluteLevelInfoPath = levelInfoPath.string();
+	std::string command = "python generate_levels.py 10 \"" + absoluteLevelInfoPath + "\""; // 使用引号包裹路径以处理空格
+	int result = system(command.c_str());
+	if (result != 0) {
+		std::cerr << "Failed to run Python script to generate levels." << std::endl;
+		return 1;
+	}
+
+	std::cout << "Levels generated." << std::endl; // 日志输出
 
 	initgraph(Game::Width, Game::High);
 	HWND hwnd = GetHWnd();
