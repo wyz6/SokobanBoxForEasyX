@@ -1,6 +1,5 @@
 #include "../include/utils.h"
 #include <windows.h>
-
 int currentLevel = 1;
 
 void loadNextLevel() {
@@ -37,7 +36,7 @@ void runGameLoop() {
 				outtextxy(Width / 2 - 50, High / 2, "You Win!"); // 显示胜利消息
 				FlushBatchDraw(); // 刷新绘图
 				Sleep(2000); // 延迟2秒
-
+				clean();
 				loadNextLevel(); // 加载下一关
 				if (bricks.empty())
 					break; // 如果没有更多关卡，退出循环

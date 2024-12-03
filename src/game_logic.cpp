@@ -32,6 +32,8 @@ void startup() {
 	initBar(); // 初始化挡板
 	initgraph(Width, High); // 初始化图形窗口
 	BeginBatchDraw(); // 开始批量绘图
+	HWND hwnd = GetHWnd();
+	SetWindowText(hwnd, TEXT(GAME_TITLE)); // 设置窗口标题
 }
 
 void gameover() {
